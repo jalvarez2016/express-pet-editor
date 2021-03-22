@@ -19,8 +19,11 @@
               <%= pet.age %>
             </span>
             <span>
-              <i class="heart icon"></i>
-              <%= pet.likes %>
+              <form action="/pets/<%= pet.id %>?_method=PUT" method="post">
+                <input type="submit" value="❤">
+                  <!-- <i class="heart icon"></i> -->
+                <%= pet.likes %>
+              </form>
             </span>
           </div>
         </div>

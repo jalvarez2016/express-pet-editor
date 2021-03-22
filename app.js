@@ -1,9 +1,12 @@
 const express = require('express')
 const app = express()
+const methodOverride = require('method-override');
 const PORT = process.env.PORT || 8000
 
 app.listen(PORT, () => {console.log(`Server started on port ${PORT}`)})
 
+app.use(express.urlencoded({ extended: true}));
+app.use(methodOverride('_method'))
 let pets = [
   {
     id: 1,
@@ -43,6 +46,12 @@ app.get('/', (req, res) => {
 app.get('/pets', (req, res) => {
   res.redirect('/')
 })
+
+app.put('/pets/:id', (req, res) => {
+  const foundPet = pets.find(pet => pet.id === parseInt(req.params.id));
+  foundPet.likes++;
+  res.redirect('/');
+});
 
 app.get("*", (req, res) => {
   res.render("notfound.ejs", {title: "Not Found"})
