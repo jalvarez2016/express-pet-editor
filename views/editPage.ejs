@@ -1,0 +1,19 @@
+<%- include('./partials/header.ejs') %>
+<body>
+    <form action="/pets/<%= foundPet.id %>?_method=PATCH" method="post">
+        <span>Name:</span>
+        <input name="name" type="text" value="<%= foundPet.name %>">
+        <br>
+        <span>Species:</span>
+        <input name="species" type="text" value="<%= foundPet.species %>">
+        <br>
+        <span>Age:</span>
+        <input name="age" type="text" value="<%= foundPet.age %>">
+        <br>
+        <span>Notes:</span>
+        <textarea name="notes">
+            <%= foundPet.notes %>
+        </textarea>
+        <input type="submit" value="Submit">
+    </form>
+</body>

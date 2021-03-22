@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const methodOverride = require('method-override');
-const PORT = process.env.PORT || 8000
+const PORT = process.env.PORT || 3000
 
 app.listen(PORT, () => {console.log(`Server started on port ${PORT}`)})
 
@@ -43,6 +43,23 @@ app.get('/', (req, res) => {
   res.render("home.ejs", {pets})
 })
 
+app.get('/pets/:id', (req, res) => {
+  const foundPet = pets.find(pet => pet.id === parseInt(req.params.id));
+  res.render('editPage.ejs', {foundPet})
+})
+
+app.patch('/pets/:id', (req, res) => {
+  let newPet = req.body
+  pets[req.params.id - 1] = {
+    id: req.params.id,
+    likes: 0,
+  }
+  Object.keys(newPet).forEach(info => {
+    pets[req.params.id - 1][info] = newPet[info]
+  })
+  res.redirect("/")
+})
+
 app.get('/pets', (req, res) => {
   res.redirect('/')
 })
@@ -52,6 +69,8 @@ app.put('/pets/:id', (req, res) => {
   foundPet.likes++;
   res.redirect('/');
 });
+
+
 
 app.get("*", (req, res) => {
   res.render("notfound.ejs", {title: "Not Found"})
